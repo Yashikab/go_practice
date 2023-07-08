@@ -15,3 +15,11 @@ uname -m
  rm -rf /usr/local/go && sudo tar -C /usr/local -xzf path_to/go1.20.5.linux-amd64.tar.gz
 export PATH=$PATH:/usr/local/go/bin
 ```
+
+- fishで永続化する
+
+```shell
+vi ~/.config/fish/config.fish
+
+# set PATH /usr/local/go/bin $PATH を加える
+```
