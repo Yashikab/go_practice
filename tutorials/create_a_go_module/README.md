@@ -33,3 +33,25 @@ Compile and install the application -- Compile and install your code locally.
 - 大文字で始まる関数は同じパッケージ内では呼ばれない
   - exported nameとしてGoでは知られている
 - `:=`を使うと宣言と初期化を一気にできる。
+
+## Call your code from another module
+
+[参考](https://go.dev/doc/tutorial/call-module-code)
+
+- `hello`ディレクトリを作り、greetingを呼び出す
+- 依存関係のトラックをできるようにする
+
+```shell
+go mod init github.com/Yashikab/go_practice/tutorials/create_a_go_module/hello
+```
+
+- `hello.go`をつくる
+- Hello関数を呼び出すコードを `hello.go`に書き、関数の戻り値を出力する
+- helloモジュールをローカルのgreetingsモジュールが使えるように編集する
+  - productionで使用する場合は、greetingsモジュールをリポジトリから公開する(Go toolsがDLするために見つけられる場所で)
+  - 今はまだ公開していないので、ローカルから見つけられるように接続する必要がある
+
+  ```shell
+  go mod edit -replace github.com/Yashikab/go_practice/tutorials/create_a_go_module/greetings=../greetings
+  go mod tidy  # 同期する
+  ```
