@@ -55,3 +55,15 @@ go mod init github.com/Yashikab/go_practice/tutorials/create_a_go_module/hello
   go mod edit -replace github.com/Yashikab/go_practice/tutorials/create_a_go_module/greetings=../greetings
   go mod tidy  # 同期する
   ```
+
+## Return and handle an error
+
+[参考](https://go.dev/doc/tutorial/handle-errors)
+
+greeting moduleからエラーを返し、callerでそれをハンドルする
+
+1. greetings/greetings.goでnameが空だったときにエラーを返却するようにする
+
+    - nilはエラーがなかったことを意味する。
+
+2. hello/hello.goを編集しerrorをハンドルするようにする
