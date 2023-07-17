@@ -104,3 +104,25 @@ greeting moduleからエラーを返し、callerでそれをハンドルする
 - テスト関数の実装はテストしたいコードと同じパッケージに実装する
 - test関数はtestingパッケージからポインタを受け取る。Tタイプをパラメータとする。
 - Tのパラメータメソッドをテストのレポートやログに使用できる。
+
+## Compile and install the application
+
+[参考](https://go.dev/doc/tutorial/compile-install)
+
+- `go run`コマンドは便利なショートカットだが、バイナリ実行ファイルを生成することはしない
+- コードビルディングのための２つのコマンドを紹介する
+  - `go build` はパッケージを依存関係も含めてコンパイルするが結果をインストールはしない
+  - `go install`はパッケージのコンパイルとインストールを行う
+
+- `go build` を helloディレクトリで行うと実行可能ファイルができる
+- `./hello` をlinux or macでは実行すれば実行できる
+- 今の状態だと実行可能なディレクトリまたは実行可能なパスを特定する必要がある。
+- 特定のパスを必要とせず実行するにはinstallする必要がある
+
+- go install pathを見つける
+  - `go list -f '{{.Target}}'`
+- PATHにgo のインストールパスを追加する
+  - `set PATH $(go list -f '{{.Target}}') $PATH
+- GOBINのパスを変えることでinstallパスを変えることができる
+  - `go env -w GOBIN=/path/to/your/bin`
+- `go install` でインストールする
