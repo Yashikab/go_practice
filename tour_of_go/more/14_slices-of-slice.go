@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"string"
+	"strings"
 )
 
 func main() {
 	// Create a tic-tac-toe board.
 	board := [][]string{
-		[]stirng{"_", "_", "_"},
-		[]stirng{"_", "_", "_"},
-		[]stirng{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
 	}
 	// The players take turns.
 	board[0][0] = "X"
@@ -19,4 +19,7 @@ func main() {
 	board[1][0] = "O"
 	board[0][2] = "X"
 
+	for i := 0; i < len(board); i++ {
+		fmt.Printf("%s\n", strings.Join(board[i], " "))
+	}
 }
