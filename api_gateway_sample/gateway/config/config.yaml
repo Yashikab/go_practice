@@ -1,0 +1,8 @@
+endpoints:
+  - path: "/greeting/en"
+    weight: 0.4
+  - path: "/greeting/fr"
+    weight: 0.3
+  - path: "/greeting/es"
+    weight: 0.3
+backend_url: "http://localhost:8080" 
