@@ -11,11 +11,22 @@ import (
 )
 
 func TestRouter(t *testing.T) {
+	// Create mock backend server
+	backend := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("name") != "Test" {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"message":"Hello, Test!"}`))
+	}))
+	defer backend.Close()
+
 	cfg := &config.Config{
 		Endpoints: []config.Endpoint{
 			{Path: "/greeting/en", Weight: 1.0},
 		},
-		BackendURL: "http://localhost:8080",
+		BackendURL: backend.URL,
 	}
 
 	router := handlers.NewRouter(cfg)
