@@ -1,0 +1,6 @@
+greeting:
+  methods:
+    - name: "GetGreeting"
+      weight: 0.5
+    - name: "GetGreetingWithFrench"
+      weight: 0.5 

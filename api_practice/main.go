@@ -1,50 +1,34 @@
 package main
 
 import (
-	"net/http"
+	"api_practice/config"
+	"api_practice/handlers"
+	"log"
+	"math/rand"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-// レスポンス用の構造体
-type InfoResponse struct {
-	Version string `json:"version"`
-}
-
-// 挨拶用のレスポンス構造体
-type GreetingResponse struct {
-	Response string `json:"response"`
-}
-
 func main() {
+	// 乱数生成器の初期化（新しい方法）
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	// 設定ファイルを読み込む
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
 	// Ginルーターの初期化
 	r := gin.Default()
 
-	// GETメソッドで/infoエンドポイントを設定
-	r.GET("/info", func(c *gin.Context) {
-		response := InfoResponse{
-			Version: "1.0.0", // ハードコードしたバージョン
-		}
-		c.JSON(http.StatusOK, response)
-	})
+	// ABテストハンドラーの初期化
+	abHandler := handlers.NewABTestHandler(cfg)
 
-	// 挨拶を返すエンドポイント
-	r.GET("/greeting", func(c *gin.Context) {
-		name := c.Query("name")
-		if name == "" {
-			c.JSON(http.StatusNotFound, gin.H{
-				"status": "error",
-				"code":   404,
-				"error":  "name parameter is required",
-			})
-			return
-		}
-
-		response := GreetingResponse{
-			Response: "Hello, " + name,
-		}
-		c.JSON(http.StatusOK, response)
-	})
+	// ルーティングの設定
+	r.GET("/info", handlers.GetInfo)
+	r.GET("/greeting", abHandler.HandleGreeting)
 
 	// サーバーを8080ポートで起動
 	r.Run(":8080")
